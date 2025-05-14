@@ -22,6 +22,7 @@ void print(const set<Card>& Alice,const set<Card>& Bob){
     for(set<Card>::iterator it = Alice.begin(); it != Alice.end(); ++it){
         cout << *it;
     }
+    cout<<endl;
     cout << "Bob's cards: "<<endl;
     for(set<Card>::iterator it = Bob.begin(); it != Bob.end(); ++it){
         cout << *it;
@@ -31,44 +32,54 @@ void game ( set<Card>& Alice, set<Card>& Bob){
   set<Card> remove;
   auto alice = Alice.begin(); 
   auto bob =Bob.rbegin();
-  print(Alice,Bob);
-  int i = 0;
-  int j = Bob.size()+1;
-  while( i < j){
+  bool breaking= false;
+  while(alice != Alice.end() || bob !=Bob.rend()){
     while(!match(*alice,Bob)){
-       ++i;
-    cout << "i"<<i<<endl;
-      if(i >= j){
+      ++alice;
+      if(alice==Alice.end()){
         break;
       }
-      ++alice;
+    }
+    if(alice==Alice.end()){
+        break;
+      }
+    if(!remove.empty()){
+      for(auto it =remove.begin();it != remove.end(); it++){
+        if(*it==*alice){
+          breaking = true;
+        }
+    }
+    }
+    if(breaking){
+      break;
     }
     cout << "Alice picked matching card "<< *alice;
-    ++alice;
-    ++i;
-     if(i >= j){
-        break;
-    }
     remove.insert(*alice);
-    cout << "i"<<i<<endl;
+    ++alice;
     while(!match(*bob,Alice)){
-      --j;
-     cout <<"j"<< j<<endl;
-       if(i >= j){
-        break;
-         
-      }
       ++bob;
-    }
-     if(i >= j){
+      if(bob==Bob.rend()){
         break;
       }
+    }
+    if(bob==Bob.rend()){
+        break;
+      }
+    if(!remove.empty()){
+      for(auto it =remove.begin();it != remove.end(); it++){
+        if(*it==*bob){
+          breaking = true;
+        }
+    }
+    }
+      
+    if(breaking){
+      break;
+    }
     cout << "Bob picked matching card "<< *bob;
     remove.insert(*bob);
     ++bob;
-    --j;
-    
-     cout <<"j"<< j<<endl;
+  
   }
   auto Remove =remove.begin();
   while(Remove !=remove.end()){
@@ -76,6 +87,7 @@ void game ( set<Card>& Alice, set<Card>& Bob){
       Bob.erase(*Remove);
       ++Remove;
   }
+    cout<<endl;
     print(Alice,Bob);
     return;
 }
