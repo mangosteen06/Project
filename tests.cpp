@@ -296,7 +296,7 @@ int main() {
     for(bst::iterator it = multiple.rbegin(); it != multiple.rend(); --it){
         cout<< *it;
     }
-    
+
     cout<< "Check == and != ";
     cout<<endl;
     bst::iterator begina = multiple.begin();
@@ -315,14 +315,20 @@ int main() {
     cout<<"should be true:";
     cout<< (rbegina != renda);
     cout<<endl;
-
+    cout<<endl;
+    cout<<"One empty hand"<<endl;
     playGame(empty,multiple);
     printDeck(empty,multiple);
+    cout<<endl;
+    cout<<"No common cards"<<endl;
     playGame(other,single);
     printDeck(other,single);
+    cout<<"Common cards"<<endl;
     playGame(other,multiple);
     printDeck(other,multiple);
-     playGame(empty,empty);
+    cout<<endl;
+    cout<<"two empty hands"<<endl;
+    playGame(empty,empty);
     printDeck(empty,empty);
  
 }
