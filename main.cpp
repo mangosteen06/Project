@@ -2,7 +2,6 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "card.h"
 #include "card_list.h"
 //Do not include set in this file
 
@@ -17,7 +16,9 @@ int main(int argv, char** argc){
   ifstream cardFile1 (argc[1]);
   ifstream cardFile2 (argc[2]);
   string line;
-
+  string cardSuit, cardValue;
+  bst AliceCards;
+  bst BobCards;
   if (cardFile1.fail() || cardFile2.fail() ){
     cout << "Could not open file " << argc[2];
     return 1;
@@ -25,16 +26,28 @@ int main(int argv, char** argc){
 
   //Read each file
   while (getline (cardFile1, line) && (line.length() > 0)){
-
+      cardSuit = line[0];
+      cardValue= line[2];
+      if (cardValue == "1"){
+        cardValue = "10";
+      }
+      bst::Card card(cardSuit,cardValue);
+     AliceCards.insert(card);
   }
   cardFile1.close();
 
 
   while (getline (cardFile2, line) && (line.length() > 0)){
-
+      cardSuit = line[0];
+      cardValue= line[2];
+      if (cardValue == "1"){
+        cardValue = "10";
+      }
+      bst::Card card(cardSuit,cardValue);
+      BobCards.insert(card);
   }
   cardFile2.close();
-  
-  
+  playGame(AliceCards,BobCards);
+  printDeck(AliceCards,BobCards);
   return 0;
 }

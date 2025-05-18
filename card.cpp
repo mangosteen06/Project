@@ -15,7 +15,14 @@ ostream& operator<<(ostream& os,const Card& next){
         cout << next.suit << " "<<next.value <<endl;
         return os;
     }
-bool great(string value1,string value2){//value1>value2
+Card& Card::operator=(const Card& other){
+    if(this!=&other){
+        this->suit = other.suit;
+        this->value = other.value;
+    }
+    return *this;
+}
+bool Great(string value1,string value2){//value1>value2
     int val1;
     int val2;
     if(value1==value2){
@@ -75,6 +82,99 @@ bool operator<(const Card& left,const Card& right){
             return false;
         }
     }else{
-        return great(right.value,left.value);
+        return Great(right.value,left.value);
     }
+}
+
+bool match( Card test, const set<Card>& other){
+     for(set<Card>::iterator it = other.begin(); it != other.end(); ++it){
+        if(test == *it){
+            return true;
+        }
+    }
+    return false;
+}
+
+void print(const set<Card>& Alice,const set<Card>& Bob){
+    cout << "Alice's cards: "<<endl;
+    for(set<Card>::iterator it = Alice.begin(); it != Alice.end(); ++it){
+        cout << *it;
+    }
+    cout<<endl;
+    cout << "Bob's cards: "<<endl;
+    for(set<Card>::iterator it = Bob.begin(); it != Bob.end(); ++it){
+        cout << *it;
+    }
+}
+void game ( set<Card>& Alice, set<Card>& Bob){
+    if(Alice.empty()||Bob.empty()){
+        return;
+    }
+  set<Card> remove;
+  auto alice = Alice.begin(); 
+  auto bob =Bob.rbegin();
+  bool breaking= false;
+  bool newline = true;
+  while(alice != Alice.end() || bob !=Bob.rend()){
+    while(!match(*alice,Bob)){
+      ++alice;
+      if(alice==Alice.end()){
+        break;
+      }
+    }
+    if(alice==Alice.end()){
+        break;
+      }
+    if(!remove.empty()){
+      for(auto it =remove.begin();it != remove.end(); it++){
+        if(*it==*alice){
+          breaking = true;
+        }
+    }
+    }
+    if(breaking){
+      break;
+    }
+    cout << "Alice picked matching card "<< *alice;
+    remove.insert(*alice);
+    ++alice;
+    while(!match(*bob,Alice)){
+      ++bob;
+      if(bob==Bob.rend()){
+        break;
+      }
+    }
+    if(bob==Bob.rend()){
+        break;
+      }
+    if(!remove.empty()){
+      for(auto it =remove.begin();it != remove.end(); it++){
+        if(*it==*bob){
+          breaking = true;
+        }
+    }
+    }
+      
+    if(breaking){
+      break;
+    }
+    cout << "Bob picked matching card "<< *bob;
+    remove.insert(*bob);
+    ++bob;
+  
+  }
+  if(remove.empty()){
+        newline = false;
+    }
+  auto Remove =remove.begin();
+  while(Remove !=remove.end()){
+      Alice.erase(*Remove);
+      Bob.erase(*Remove);
+      ++Remove;
+  }
+    if(newline){
+    cout<<endl;
+    }
+    print(Alice,Bob);
+    return;
 }
