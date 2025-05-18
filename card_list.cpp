@@ -392,9 +392,7 @@ bool newline= true;
       Bob.remove(*Trash);
       ++Trash;
   }
-  if(newline){
     cout<<endl;
-  }
 }
 void printDeck ( const bst& Alice, const bst& Bob){
     if(!Alice.empty()){
