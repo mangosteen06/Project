@@ -114,7 +114,6 @@ void game ( set<Card>& Alice, set<Card>& Bob){
   auto alice = Alice.begin(); 
   auto bob =Bob.rbegin();
   bool breaking= false;
-  bool newline = true;
   while(alice != Alice.end() || bob !=Bob.rend()){
     while(!match(*alice,Bob)){
       ++alice;
@@ -163,18 +162,13 @@ void game ( set<Card>& Alice, set<Card>& Bob){
     ++bob;
   
   }
-  if(remove.empty()){
-        newline = false;
-    }
   auto Remove =remove.begin();
   while(Remove !=remove.end()){
       Alice.erase(*Remove);
       Bob.erase(*Remove);
       ++Remove;
   }
-    if(newline){
     cout<<endl;
-    }
     print(Alice,Bob);
     return;
 }

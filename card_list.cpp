@@ -328,71 +328,67 @@ bool match(bst::Card test, const bst& other){
 
 
 void playGame ( bst& Alice, bst& Bob){
-if(Alice.empty()||Bob.empty()){
-    return;
-}
-bst::iterator alice = Alice.begin(); 
-bst::iterator bob = Bob.rbegin();
-bst trash;// keep all cards to be removed and then remove them at the end
-bool newline= true;
-   bool breaking= false; //find when to break out early- ie when there are no more matching cards or we have reached the end
-  while(alice != Alice.end() || bob !=Bob.rend()){
-    while(!match(*alice,Bob)){
-      ++alice;
-      if(alice==Alice.end()){
-        break;
-      }
+    if(Alice.empty()||Bob.empty()){
+        return;
     }
-    if(alice==Alice.end()){
-        break;
-      }
-    if(!trash.empty()){
-      for(bst::iterator it =trash.begin();it != trash.end(); ++it)
-        if(*it==*alice){
-          breaking = true;
+    bst::iterator alice = Alice.begin(); 
+    bst::iterator bob = Bob.rbegin();
+    bst trash;// keep all cards to be removed and then remove them at the end
+    bool breaking= false; //find when to break out early- ie when there are no more matching cards or we have reached the end
+    while(alice != Alice.end() || bob !=Bob.rend()){
+        while(!match(*alice,Bob)){
+        ++alice;
+        if(alice==Alice.end()){
+            break;
         }
-    }
-    if(breaking){
-      break;
-    }
-    cout << "Alice picked matching card "<< *alice;
-    trash.insert(*alice);
-    ++alice;
-    while(!match(*bob,Alice)){
-      --bob;
-      if(bob==Bob.rend()){
-        break;
-      }
-    }
-    if(bob==Bob.rend()){
-        break;
-      }
-    if(!trash.empty()){
-      for(bst::iterator it =trash.begin();it != trash.end(); ++it){
-        if(*it==*bob){
-          breaking = true;
         }
+        if(alice==Alice.end()){
+            break;
+        }
+        if(!trash.empty()){
+        for(bst::iterator it =trash.begin();it != trash.end(); ++it)
+            if(*it==*alice){
+            breaking = true;
+            }
+        }
+        if(breaking){
+        break;
+        }
+        cout << "Alice picked matching card "<< *alice;
+        trash.insert(*alice);
+        ++alice;
+        while(!match(*bob,Alice)){
+        --bob;
+        if(bob==Bob.rend()){
+            break;
+        }
+        }
+        if(bob==Bob.rend()){
+            break;
+        }
+        if(!trash.empty()){
+        for(bst::iterator it =trash.begin();it != trash.end(); ++it){
+            if(*it==*bob){
+            breaking = true;
+            }
+        }
+        }
+        
+        if(breaking){
+        break;
+        }
+        cout << "Bob picked matching card "<< *bob;
+        trash.insert(*bob);
+        --bob;
+    
     }
+    bst::iterator Trash =trash.begin();
+    while(Trash !=trash.end()){
+        Alice.remove(*Trash);
+        Bob.remove(*Trash);
+        ++Trash;
     }
-      
-    if(breaking){
-      break;
-    }
-    cout << "Bob picked matching card "<< *bob;
-    trash.insert(*bob);
-    --bob;
-  
-  }
-  bst::iterator Trash =trash.begin();
-  if(trash.empty()){
-    newline = false;
-  }
-  while(Trash !=trash.end()){
-      Alice.remove(*Trash);
-      Bob.remove(*Trash);
-      ++Trash;
-  }
-    cout<<endl;
+        cout<<endl;
 }
 void printDeck ( const bst& Alice, const bst& Bob){
     if(!Alice.empty()){
