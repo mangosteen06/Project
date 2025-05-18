@@ -70,10 +70,12 @@ class bst::iterator{
     iterator& operator++(){
         n = tree->getSuccessorNode(n->data);
         return *this;
+        
     }
     iterator& operator--(){
         n = tree->getPredecessorNode(n->data);
         return *this;
+        
     }
 
     friend bool operator==(const iterator& left,const iterator& right){

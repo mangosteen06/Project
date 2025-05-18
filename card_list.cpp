@@ -397,13 +397,18 @@ bool newline= true;
   }
 }
 void printDeck ( const bst& Alice, const bst& Bob){
-    cout << "Alice's cards: "<<endl;
-    for(bst::iterator it = Alice.begin(); it != Alice.end(); ++it){
-        cout << *it;
+    if(!Alice.empty()){
+        cout << "Alice's cards: "<<endl;
+        for(bst::iterator it = Alice.begin(); it != Alice.end(); ++it){
+            cout << *it;
     }
     cout<<endl;
-    cout << "Bob's cards: "<<endl;
-    for(bst::iterator it = Bob.begin(); it != Bob.end(); ++it){
-        cout << *it;
     }
+    if(!Bob.empty()){
+        cout << "Bob's cards: "<<endl;
+        for(bst::iterator it = Bob.begin(); it != Bob.end(); ++it){
+            cout << *it;
+        }
+    }
+    
 }
